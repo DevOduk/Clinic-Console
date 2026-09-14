@@ -2,8 +2,11 @@
 
 import { Avatar, IconButton } from "@mui/material";
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material";
+import { useUser } from "../context/userContext";
 
 export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
+  const { profile } = useUser();
+
   return (
     <header className="flex w-full items-center justify-between gap-2.5 bg-(--teal-dark) px-3 py-4 md:hidden">
       <div className="flex items-center gap-2.5 justify-center">
@@ -33,7 +36,9 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
         >
           AM
         </Avatar>
-        <span className="text-sm text-white">Hi, Alex</span>
+        <span className="text-sm text-white">
+          {profile ? `Hi, ${profile.lastName}` : `Hello`}
+        </span>
         <IconButton className="text-red-500">
           <LogoutOutlined className="text-red-500" />
         </IconButton>
