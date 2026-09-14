@@ -76,19 +76,23 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
   };
 
   const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to delete this product?`)) return;
+    if (!confirm("Are you sure you want to delete this product?")) return;
+
     setBackDrop(true);
 
     try {
       await handleDeleteProducts([ProductDetails.id]);
 
-      router.back();
       alert("Product deleted successfully!");
 
-      setBackDrop(false);
+      if (window.history.length > 1) {
+        router.back();
+      } else {
+        router.push("/");
+      }
     } catch {
       alert("Something went wrong while deleting.");
-
+    } finally {
       setBackDrop(false);
     }
   };
@@ -134,7 +138,7 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
                 alt={ProductDetails.title}
                 className="rounded-lg p-2 object-cover transition-transform duration-300 group-hover:scale-105 brightness-90"
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
+                preload
               />
             </div>
           </div>
@@ -145,6 +149,7 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
                 <Image
                   key={i}
                   width={80}
+                  preload
                   height={80}
                   onClick={() => setCurrentImage(i)}
                   src={img || "/images/pizza.avif"}

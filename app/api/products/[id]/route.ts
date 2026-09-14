@@ -33,7 +33,7 @@ async function fetchProduct(
   body?: unknown,
 ) {
   const url = new URL(
-    `https://dummyjson.com/products/${encodeURIComponent(id)}`,
+    `https://dummyjson.com/products/${encodeURIComponent(id)}?delay=0`,
   );
   url.searchParams.set("delay", "2000");
   const headers = new Headers({ Accept: "application/json" });

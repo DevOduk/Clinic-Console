@@ -44,10 +44,9 @@ function ProductTableRow({
           <Image
             src={item.thumbnail}
             alt={item.title}
-            width={96}
-            height={54}
+            fill
             sizes="(max-width: 768px) 64px, 96px"
-            className="h-full w-full object-cover object-center"
+            className="object-cover object-center"
           />
         </div>
       </td>

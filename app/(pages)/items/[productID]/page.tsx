@@ -50,7 +50,6 @@ async function ProductView({
   }>;
 }) {
   const { productID } = await params;
-  const decodedID = decodeURIComponent(productID ?? "").trim();
   const requestHeaders = await headers();
   const host = requestHeaders.get("host");
   const protocol = requestHeaders.get("x-forwarded-proto") ?? "http";
@@ -60,8 +59,10 @@ async function ProductView({
   }
 
   const response = await fetch(
-    `${protocol}://${host}/api/products/${encodeURIComponent(decodedID)}`,
-    { next: { revalidate: 3600 } },
+    `${protocol}://${host}/api/products/${productID}`,
+    {
+      next: { revalidate: 3600 },
+    },
   );
 
   if (!response.ok) {
