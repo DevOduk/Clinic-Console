@@ -32,7 +32,7 @@ State isolation follows a strict separation of concerns depending on the data li
 
 - **Fetching**: Handled via standard Next.js App Router server components where applicable, alongside client-side `fetch` for dynamic filters and simulated error endpoints (`/http/500`).
 - **Caching & Revalidation**: Leverages Next.js default fetch caching strategies with explicit cache-control directives on health-check routes (`no-store` headers on `/api/health`) to prevent stale offline pings. Client-side mutations trigger router refreshes (`router.refresh()`) to re-fetch server data components upon updates.
-A few redis caching use in some scenarios
+  A few redis caching use in some scenarios
 
 ---
 
