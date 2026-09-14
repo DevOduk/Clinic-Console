@@ -1,5 +1,13 @@
 # AI Reflection & Technical Summary: Clinic Stock Console
 
+## Tools Used
+1. VS Code
+2. Prettier ESlint
+3. Github Copilot
+4. Vercel
+5. Redis
+6. Figma
+
 ## Architectural Decisions & State Management
 
 The core architecture prioritizes a URL-driven state management model. Rather than relying entirely on local component state for filters, search queries, and sorting, the application uses URL search parameters (`searchParams`) as the single source of truth. Whenever a user interacts with filters (`?category=`, `?quantity=`), search keywords (`?q=`), or sorting orders (`?order_by=`), the URL updates silently without causing a jarring full-page reload. This ensures the application maintains full state memory, supports deep linking, and handles session persistence seamlessly via the sign-in return URL (`/signin?to_url=...`).
