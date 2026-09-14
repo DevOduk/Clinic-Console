@@ -31,12 +31,4 @@ jobs:
 
       - name: Step 3 - Run Test Suite
         run: npm test --if-present
-
-      - name: Step 4 - Trigger Deployment
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: vercel/action@v3
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
+        
