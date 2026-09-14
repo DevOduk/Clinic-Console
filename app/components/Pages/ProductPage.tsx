@@ -30,7 +30,7 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
 
     try {
       const response = await fetch(
-        `https://dummyjson.com/products/${ProductDetails.id}`,
+        `https://dummyjson.com/products/${ProductDetails.id}?delay=2000`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -101,7 +101,7 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
     <main className="px-4 py-16 w-full">
       <Backdrop
         sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
-        open={backDrop}
+        open={backDrop || isSubmitting}
         onClick={() => null}
       >
         <CircularProgress color="inherit" />

@@ -227,7 +227,7 @@ function CategoryPageView({ category }: { category: string }) {
       </div>
 
       <section className="overflow-hidden rounded-lg border border-[#e3e9e6] bg-white">
-        <div className="flex items-start justify-between px-6 pb-4.5 pt-6">
+        <div className="flex flex-col md:flex-row gap-3 items-start justify-between px-6 pb-4.5 pt-6">
           <div>
             <span className="mb-2.5 block text-xs font-semibold uppercase tracking-[0.12em] text-[#7a8a86]">
               Catalog
@@ -236,7 +236,7 @@ function CategoryPageView({ category }: { category: string }) {
               All inventory items
             </h2>
           </div>
-          <div className="flex items-center gap-5">
+          <div className="flex md:w-auto w-full items-center gap-5 flex-col md:flex-row">
             <button
               disabled={exporting}
               onClick={handleExport}
@@ -246,7 +246,7 @@ function CategoryPageView({ category }: { category: string }) {
               {exporting ? "Exporting ..." : "Export list"}
             </button>
 
-            <label className="flex shrink-0 items-center gap-1 w-full md:w-auto ps-2 cursor-pointer">
+            <label className="flex md:ml-0 ml-auto shrink-0 items-center gap-1 w-fit ps-2 cursor-pointer">
               <span className="font-medium text-black">Sort By: </span>
               <select
                 className="h-9.5 w-fit cursor-pointer rounded border-0 bg-white px-2.5 text-xs text-[#71817d] outline-none focus:border-[#79a9a0] focus:ring-4 focus:ring-[#e0efec]"
