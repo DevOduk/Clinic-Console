@@ -16,7 +16,10 @@ export async function GET(request: Request) {
     });
   } catch {
     return NextResponse.json(
-      { message: "The DummyJSON service could not be reached.", retryable: true },
+      {
+        message: "The DummyJSON service could not be reached.",
+        retryable: true,
+      },
       { status: 502, headers: { "Cache-Control": "no-store" } },
     );
   }

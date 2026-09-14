@@ -5,14 +5,10 @@ const LOGIN_URL = `https://dummyjson.com/auth/login?delay=2000`;
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-
   try {
     const { username, password, expiresInMins } = await request.json();
 
-    if (
-      !password.trim() ||
-      !username.trim()
-    ) {
+    if (!password.trim() || !username.trim()) {
       return NextResponse.json(
         { message: "Username and password are required." },
         { status: 422, headers: { "Cache-Control": "no-store" } },
@@ -22,12 +18,10 @@ export async function POST(request: Request) {
     const loginPayload = {
       username: username.trim(),
       password,
-      expiresInMins
+      expiresInMins,
     };
     const accessTokenMaxAge =
-      expiresInMins > 0
-        ? Math.floor(expiresInMins * 60)
-        : 3600;
+      expiresInMins > 0 ? Math.floor(expiresInMins * 60) : 3600;
 
     try {
       const response = await fetch(LOGIN_URL, {
@@ -77,13 +71,10 @@ export async function POST(request: Request) {
         { status: 502, headers: { "Cache-Control": "no-store" } },
       );
     }
-
   } catch {
     return NextResponse.json(
       { message: "Request body must be valid JSON." },
       { status: 400, headers: { "Cache-Control": "no-store" } },
     );
   }
-
-
 }

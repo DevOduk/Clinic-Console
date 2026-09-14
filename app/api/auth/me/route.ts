@@ -35,7 +35,10 @@ export async function GET() {
     });
   } catch {
     return NextResponse.json(
-      { message: "The user details service could not be reached.", retryable: true },
+      {
+        message: "The user details service could not be reached.",
+        retryable: true,
+      },
       { status: 502, headers: { "Cache-Control": "no-store" } },
     );
   }

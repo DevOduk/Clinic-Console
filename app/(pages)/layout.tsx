@@ -58,24 +58,24 @@ export default function PagesLayout({ children }: { children: ReactNode }) {
     return <LoadingProfile />;
   }
 
-return (
-  <div className="flex min-h-screen">
-    <SideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+  return (
+    <div className="flex min-h-screen">
+      <SideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-    {isSidebarOpen && (
-      <button
-        aria-label="Close navigation menu"
-        className="fixed inset-0 z-40 bg-black/60 md:hidden"
-        onClick={() => setIsSidebarOpen(false)}
-        type="button"
-      />
-    )}
+      {isSidebarOpen && (
+        <button
+          aria-label="Close navigation menu"
+          className="fixed inset-0 z-40 bg-black/60 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+          type="button"
+        />
+      )}
 
-    <main className="relative flex h-screen overflow-y-auto min-w-0 flex-1 flex-col">
-      <Header onMenuClick={() => setIsSidebarOpen(true)} />
+      <main className="relative flex h-screen overflow-y-auto min-w-0 flex-1 flex-col">
+        <Header onMenuClick={() => setIsSidebarOpen(true)} />
 
-      {showOfflineStatus ? <OfflineBanner /> : children}
-    </main>
-  </div>
-);
+        {showOfflineStatus ? <OfflineBanner /> : children}
+      </main>
+    </div>
+  );
 }

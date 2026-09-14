@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
-export function useNetworkStatus(pingUrl = '/api/ping') {
+export function useNetworkStatus(pingUrl = "/api/ping") {
   const [isOnline, setIsOnline] = useState<boolean>(
-    typeof window !== 'undefined' ? navigator.onLine : true
+    typeof window !== "undefined" ? navigator.onLine : true,
   );
-// default to isOnline on initial load 
+  // default to isOnline on initial load
 
   const verifyActualConnection = useCallback(async () => {
     if (!navigator.onLine) {
@@ -16,8 +16,8 @@ export function useNetworkStatus(pingUrl = '/api/ping') {
 
     try {
       await fetch(`${pingUrl}?t=${Date.now()}`, {
-        method: 'HEAD',
-        cache: 'no-store',
+        method: "HEAD",
+        cache: "no-store",
       });
       setIsOnline(true);
     } catch (error) {
@@ -32,14 +32,14 @@ export function useNetworkStatus(pingUrl = '/api/ping') {
     const handleOnline = () => verifyActualConnection();
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     const interval = setInterval(verifyActualConnection, 30000);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
       clearInterval(interval);
     };
   }, [verifyActualConnection]);

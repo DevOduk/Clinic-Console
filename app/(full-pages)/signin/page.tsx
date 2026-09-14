@@ -8,9 +8,7 @@ export const metadata: Metadata = {
 };
 
 function Signin() {
-  return (
-    <SigninPage />
-  )
+  return <SigninPage />;
 }
 
 export default Signin;

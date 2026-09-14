@@ -23,13 +23,15 @@ export async function GET(
   try {
     const cached = await Promise.race([
       redis.get(cacheKey),
-      new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 400))
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Timeout")), 400),
+      ),
     ]);
 
     if (cached) {
       return NextResponse.json(
         typeof cached === "string" ? JSON.parse(cached) : cached,
-        { status: 200, headers: { "X-Cache": "HIT" } }
+        { status: 200, headers: { "X-Cache": "HIT" } },
       );
     }
   } catch (e) {
@@ -44,7 +46,7 @@ export async function GET(
     if (!response.ok || !data || !data.products) {
       return NextResponse.json(
         { message: "Failed to fetch category products." },
-        { status: response.status || 500 }
+        { status: response.status || 500 },
       );
     }
 
@@ -67,9 +69,9 @@ export async function GET(
     }
 
     // Cache the modified response data
-    redis.set(cacheKey, data, { ex: 3600 }).catch((err) =>
-      console.error("Background cache write failed:", err)
-    );
+    redis
+      .set(cacheKey, data, { ex: 3600 })
+      .catch((err) => console.error("Background cache write failed:", err));
 
     return NextResponse.json(data, {
       status: 200,
@@ -77,7 +79,10 @@ export async function GET(
     });
   } catch {
     return NextResponse.json(
-      { message: "The DummyJSON service could not be reached.", retryable: true },
+      {
+        message: "The DummyJSON service could not be reached.",
+        retryable: true,
+      },
       { status: 502, headers: { "Cache-Control": "no-store" } },
     );
   }

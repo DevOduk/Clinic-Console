@@ -7,6 +7,6 @@ export const metadata: Metadata = {
     "Manage your clinic stock inventory with ease. Update prices and stock count with one click!",
 };
 
-export default function Http500() {    
+export default function Http500() {
   return <Http500TestPage />;
 }

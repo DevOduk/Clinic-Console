@@ -32,7 +32,9 @@ async function fetchProduct(
   method: "GET" | "PUT" = "GET",
   body?: unknown,
 ) {
-  const url = new URL(`https://dummyjson.com/products/${encodeURIComponent(id)}`);
+  const url = new URL(
+    `https://dummyjson.com/products/${encodeURIComponent(id)}`,
+  );
   url.searchParams.set("delay", "2000");
   const headers = new Headers({ Accept: "application/json" });
   const authorization = request.headers.get("authorization");
@@ -45,7 +47,7 @@ async function fetchProduct(
       method,
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),
-      next: { revalidate: 3600 }
+      next: { revalidate: 3600 },
     });
     const data = await response.json().catch(() => null);
     return NextResponse.json(data, {
@@ -54,7 +56,10 @@ async function fetchProduct(
     });
   } catch {
     return NextResponse.json(
-      { message: "The DummyJSON service could not be reached.", retryable: true },
+      {
+        message: "The DummyJSON service could not be reached.",
+        retryable: true,
+      },
       { status: 502, headers: { "Cache-Control": "no-store" } },
     );
   }

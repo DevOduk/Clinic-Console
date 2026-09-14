@@ -8,20 +8,24 @@ const redis = new Redis({
 });
 
 export async function GET() {
-  const cacheKey = 'products:categories:all';
-  // try redis cache first 
+  const cacheKey = "products:categories:all";
+  // try redis cache first
   try {
     const cached = await redis.get(cacheKey);
     if (cached)
       return NextResponse.json(
-        typeof cached === "string" ? JSON.parse(cached) : cached, { status: 200 }
+        typeof cached === "string" ? JSON.parse(cached) : cached,
+        { status: 200 },
       );
   } catch (e) {
     console.error("Redis read error on all categories:", e);
   }
 
   try {
-    const response = await fetch(`https://dummyjson.com/products/categories?delay=0`, { next: { revalidate: 3600 } });
+    const response = await fetch(
+      `https://dummyjson.com/products/categories?delay=0`,
+      { next: { revalidate: 3600 } },
+    );
     const data = await response.json().catch(() => null);
 
     if (data) {
@@ -33,7 +37,10 @@ export async function GET() {
     });
   } catch {
     return NextResponse.json(
-      { message: "The DummyJSON service could not be reached.", retryable: true },
+      {
+        message: "The DummyJSON service could not be reached.",
+        retryable: true,
+      },
       { status: 502, headers: { "Cache-Control": "no-store" } },
     );
   }

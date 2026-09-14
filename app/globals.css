@@ -45,5 +45,5 @@ a {
   text-decoration: none;
 }
 :disabled {
-    cursor: no-drop !important;
+  cursor: no-drop !important;
 }

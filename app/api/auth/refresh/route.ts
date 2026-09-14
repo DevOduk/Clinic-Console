@@ -12,15 +12,15 @@ export async function POST(request: Request) {
     );
   }
   try {
-    const response = await fetch('https://dummyjson.com/auth/refresh', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("https://dummyjson.com/auth/refresh", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        refreshToken: refreshToken, 
+        refreshToken: refreshToken,
         // expiresInMins: 30,
         expiresInMins: 1,
       }),
-      credentials: 'include' 
+      credentials: "include",
     });
     const responseBody = await response.json().catch(() => null);
     const nextResponse = NextResponse.json(responseBody, {

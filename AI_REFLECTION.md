@@ -1,6 +1,7 @@
 # AI Reflection & Technical Summary: Clinic Stock Console
 
 ## Tools Used
+
 1. VS Code
 2. Prettier ESlint
 3. Github Copilot

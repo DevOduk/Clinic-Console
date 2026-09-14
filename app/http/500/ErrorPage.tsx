@@ -20,7 +20,6 @@ export default function Http500TestPage() {
           `HTTP Error ${res.status}: Server returned an internal server error response.`,
         );
       }
-
     } catch (err: any) {
       setError(err.message || "Failed to complete the test request.");
     } finally {

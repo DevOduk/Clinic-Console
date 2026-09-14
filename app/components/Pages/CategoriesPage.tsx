@@ -49,7 +49,6 @@ function CategoriesView() {
             );
             const products = await productsResponse.json();
 
-            
             return {
               ...category,
               count: products.total,
@@ -116,7 +115,10 @@ function CategoriesView() {
               {loading ? (
                 Array.from({ length: 6 }).map((_, index) => (
                   <tr key={`loading-${index}`} className="h-20 animate-pulse">
-                    <td colSpan={7} className="border-t border-[#edf1ef] px-5 py-5">
+                    <td
+                      colSpan={7}
+                      className="border-t border-[#edf1ef] px-5 py-5"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="h-5 w-5 rounded bg-[#e8eeeb]" />
                         <div className="h-12 w-30 rounded bg-[#e8eeeb]" />
@@ -133,7 +135,9 @@ function CategoriesView() {
                     <tr
                       className="cursor-pointer hover:bg-gray-100"
                       key={category.name}
-                      onClick={() => router.push(`/categories/${category.slug}`)}
+                      onClick={() =>
+                        router.push(`/categories/${category.slug}`)
+                      }
                     >
                       <td className="rounded-l-lg p-4 align-middle">
                         <div className="flex gap-4 items-center">
@@ -157,7 +161,9 @@ function CategoriesView() {
                         <strong className="block text-xs font-medium text-[#354440]">
                           {category.count}+
                         </strong>
-                        <span className="mt-1 block text-xs text-(--muted)">items</span>
+                        <span className="mt-1 block text-xs text-(--muted)">
+                          items
+                        </span>
                       </td>
 
                       <td className="rounded-r-lg p-4 text-right align-middle">
@@ -180,7 +186,11 @@ function CategoriesView() {
                     colSpan={7}
                     className="h-full border-t border-[#edf1ef] px-5 py-10 text-center"
                   >
-                    <HourglassEmpty className="mb-4" fontSize="large" color="error" />
+                    <HourglassEmpty
+                      className="mb-4"
+                      fontSize="large"
+                      color="error"
+                    />
                     <p className="text-sm font-medium text-[#354440]">
                       No categories found
                     </p>
@@ -213,8 +223,8 @@ function CategoriesView() {
           Good organization compounds.
         </h2>
         <p className="mb-6 text-xs leading-relaxed text-[#60756f]">
-          Categories make it easier to find supplies quickly, spot trends, and keep every
-          team member working from the same catalog.
+          Categories make it easier to find supplies quickly, spot trends, and
+          keep every team member working from the same catalog.
         </p>
         <Link
           href={"/items"}

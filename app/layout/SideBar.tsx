@@ -51,15 +51,19 @@ export default function SideBar({
   isOpen: boolean;
   onClose: () => void;
 }) {
-    const { profile,logout } = useUser();
+  const { profile, logout } = useUser();
   const pathname = usePathname();
   const isOnline = useNetworkStatus();
 
-  const handleLogout = ()=>{
-    if(confirm('Are you sure you want to log out? You will be required to login again.')){
+  const handleLogout = () => {
+    if (
+      confirm(
+        "Are you sure you want to log out? You will be required to login again.",
+      )
+    ) {
       logout();
     }
-  }
+  };
   return (
     <aside
       className={`fixed inset-y-0 left-0 z-50 flex h-screen w-70 max-w-[85vw] flex-col bg-(--teal-dark) px-4.25 py-5.5 text-[#d9e7e3] shadow-2xl transition-transform duration-300 md:static md:z-auto md:h-screen md:min-h-screen md:max-w-none md:translate-x-0 md:shadow-none ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
@@ -82,7 +86,9 @@ export default function SideBar({
       <nav className="grid gap-1" aria-label="Main navigation">
         {navigation.map((item) => {
           const isActive =
-            item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            item.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(item.href);
 
           return (
             <Link
@@ -96,7 +102,9 @@ export default function SideBar({
               >
                 {item.icon}
               </span>
-              <span className={`${isActive ? "text-(--orange)" : "text-[#afcbc5]"}`}>
+              <span
+                className={`${isActive ? "text-(--orange)" : "text-[#afcbc5]"}`}
+              >
                 {item.label}
               </span>
               {isActive && (
@@ -125,7 +133,9 @@ export default function SideBar({
             {isOnline ? (
               <span className="text-green-500 text-xs">Online</span>
             ) : (
-              <span className="text-red-500 text-xs">Offline | Retry connection.</span>
+              <span className="text-red-500 text-xs">
+                Offline | Retry connection.
+              </span>
             )}
           </div>
         </div>
@@ -142,9 +152,11 @@ export default function SideBar({
             <div className="text-sm">
               {profile.firstName} {profile.lastName}{" "}
             </div>
-            <span className="muted text-xs text-gray-400 uppercase">{profile.role}</span>
+            <span className="muted text-xs text-gray-400 uppercase">
+              {profile.role}
+            </span>
           </div>
-          <IconButton onClick={()=> handleLogout()} className="text-red-500">
+          <IconButton onClick={() => handleLogout()} className="text-red-500">
             <LogoutOutlined className="text-red-500" />
           </IconButton>
         </div>

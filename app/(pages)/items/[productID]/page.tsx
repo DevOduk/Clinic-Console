@@ -21,9 +21,12 @@ export async function generateMetadata({
   const protocol = requestHeaders.get("x-forwarded-proto") ?? "http";
   let title: string;
 
-  const response = await fetch(`${protocol}://${host}/api/products/${productID}`, {
-    next: { revalidate: 3600 },
-  });
+  const response = await fetch(
+    `${protocol}://${host}/api/products/${productID}`,
+    {
+      next: { revalidate: 3600 },
+    },
+  );
 
   if (!response.ok) {
     title = "Product Not Found | Clinic - Inventory Management Solution";
@@ -68,8 +71,8 @@ async function ProductView({
 
         <p className="font-medium">Product not found</p>
         <p className="text-sm text-zinc-400 font-normal">
-          No product found with this id <strong>{productID}</strong>! It as either deleted
-          of moved.
+          No product found with this id <strong>{productID}</strong>! It as
+          either deleted of moved.
         </p>
         <div className="flex gap-4 items-center">
           <Link

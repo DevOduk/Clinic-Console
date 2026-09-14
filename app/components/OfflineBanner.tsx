@@ -26,8 +26,12 @@ export default function OfflineBanner() {
         />
 
         <p className="text-sm font-medium">No internet connection</p>
-        <p className="text-xs text-zinc-400 font-normal">Changes might not be saved.</p>
-        <button className="button rounded-full text-blue-600 px-3 p-1 border cursor-pointer bg-blue-50 border-blue-500 hover:bg-blue-200">Retry</button>
+        <p className="text-xs text-zinc-400 font-normal">
+          Changes might not be saved.
+        </p>
+        <button className="button rounded-full text-blue-600 px-3 p-1 border cursor-pointer bg-blue-50 border-blue-500 hover:bg-blue-200">
+          Retry
+        </button>
       </div>
     );
   }
@@ -36,7 +40,9 @@ export default function OfflineBanner() {
     return (
       <div className="fixed bottom-6 left-6 z-50 flex items-center gap-3 bg-zinc-900 text-white px-4 py-3 rounded-lg shadow-xl">
         <WifiOutlinedIcon className="h-5 w-5 text-emerald-500" />
-        <p className="text-sm font-medium text-emerald-400">Connection restored</p>
+        <p className="text-sm font-medium text-emerald-400">
+          Connection restored
+        </p>
       </div>
     );
   }

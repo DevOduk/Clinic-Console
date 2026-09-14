@@ -33,7 +33,11 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...ProductDetails, stock: count, price: price }),
+          body: JSON.stringify({
+            ...ProductDetails,
+            stock: count,
+            price: price,
+          }),
         },
       );
 
@@ -183,7 +187,10 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
                 `Minimum Order Quantity ${ProductDetails.minimumOrderQuantity}`,
                 `${ProductDetails.warrantyInformation}`,
               ]?.map((spec, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-gray-600">
+                <li
+                  key={index}
+                  className="flex items-start gap-2 text-sm text-gray-600"
+                >
                   <span className="mt-0.5 text-emerald-500">✓</span>
                   <span>{spec}</span>
                 </li>
@@ -229,7 +236,9 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
                   min="1"
                   value={count}
                   onChange={(e) =>
-                    setCount(Number(e.target.value) < 1 ? 1 : Number(e.target.value))
+                    setCount(
+                      Number(e.target.value) < 1 ? 1 : Number(e.target.value),
+                    )
                   }
                   className="w-28! shadow-lg shadow-gray-400 h-12 text-center border rounded-lg border-gray-300 bg-white appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 />

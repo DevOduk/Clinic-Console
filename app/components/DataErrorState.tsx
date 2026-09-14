@@ -10,7 +10,9 @@ export function DataErrorState({
   return (
     <div className="flex w-full flex-col items-center justify-center rounded-lg p-8 text-center my-6">
       <div className="max-w-md space-y-3">
-        <h3 className="text-base font-semibold text-red-800">Unable to load data</h3>
+        <h3 className="text-base font-semibold text-red-800">
+          Unable to load data
+        </h3>
         <p className="text-sm text-red-600">{message}</p>
         <div className="pt-2">
           <button

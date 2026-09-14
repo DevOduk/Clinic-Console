@@ -6,7 +6,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Link from "next/link";
 import { useUser } from "@/app/context/userContext";
 
-
 function SigninPage() {
   const { setProfile } = useUser();
   const router = useRouter();
@@ -32,7 +31,7 @@ function SigninPage() {
         body: JSON.stringify({
           username,
           password,
-          expiresInMins: 60
+          expiresInMins: 60,
         }),
         credentials: "include",
       });
@@ -87,7 +86,9 @@ function SigninPage() {
           <div className="flex h-11 aspect-square items-center justify-center rounded-lg bg-(--orange) text-3xl font-bold text-(--teal-dark)">
             C
           </div>
-          <p className="text text-teal-700 text-4xl font-bold leading-relaxed">Clinic</p>
+          <p className="text text-teal-700 text-4xl font-bold leading-relaxed">
+            Clinic
+          </p>
         </div>
 
         <div className="space-y-1 text-center">

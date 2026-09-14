@@ -10,17 +10,17 @@ export async function generateMetadata({
   }>;
 }): Promise<Metadata> {
   const { Category } = await params;
-  
-const category = Category
-  .replaceAll("-", " ")
-  .replace(/\b\w/g, (char) => char.toUpperCase());
-  
+
+  const category = Category.replaceAll("-", " ").replace(/\b\w/g, (char) =>
+    char.toUpperCase(),
+  );
+
   return {
-    title: `${category ? category + ' - ': ''}Categories | Clinic - Inventory Management Solution`,
+    title: `${category ? category + " - " : ""}Categories | Clinic - Inventory Management Solution`,
     description:
       "Manage your clinic stock inventory with ease. Update prices and stock count with one click!",
   };
-};
+}
 export default async function CategoryPage({
   params,
 }: {
@@ -30,9 +30,9 @@ export default async function CategoryPage({
 }) {
   const { Category } = await params;
 
-const category = Category.replaceAll("-", " ").replace(/\b\w/g, (char) =>
-  char.toUpperCase(),
-);
+  const category = Category.replaceAll("-", " ").replace(/\b\w/g, (char) =>
+    char.toUpperCase(),
+  );
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 md:px-10 py-10 md:py-14">

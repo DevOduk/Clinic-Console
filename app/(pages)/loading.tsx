@@ -1,4 +1,4 @@
-// to be shown in the internal main page when loading 
+// to be shown in the internal main page when loading
 
 export default function PageLoading() {
   return (

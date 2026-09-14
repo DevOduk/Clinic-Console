@@ -1,4 +1,7 @@
-import { ChevronRightOutlined, ErrorOutlineOutlined } from "@mui/icons-material";
+import {
+  ChevronRightOutlined,
+  ErrorOutlineOutlined,
+} from "@mui/icons-material";
 import Link from "next/link";
 import { headers } from "next/headers";
 import type { ProductsResponse } from "@/app/data/products";
@@ -44,11 +47,12 @@ export default async function Home() {
       0,
     ) || 0;
 
-    // take first 15 sorted by last updated 
+  // take first 15 sorted by last updated
   const recentProducts = products?.products
     ?.sort(
       (a, b) =>
-        new Date(b.meta.updatedAt).getTime() - new Date(a.meta.updatedAt).getTime(),
+        new Date(b.meta.updatedAt).getTime() -
+        new Date(a.meta.updatedAt).getTime(),
     )
     .slice(0, 15);
 

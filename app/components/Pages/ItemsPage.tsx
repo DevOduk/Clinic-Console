@@ -80,7 +80,8 @@ function ItemsPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [exporting, setExporting] = useState<boolean>(false);
   const allProductsSelected =
-    products.length > 0 && products.every((product) => selected.includes(product.id));
+    products.length > 0 &&
+    products.every((product) => selected.includes(product.id));
   const [backDrop, setBackDrop] = useState(false);
 
   // creating new item
@@ -163,7 +164,8 @@ function ItemsPage() {
             selectedCategory === "all" || product.category === selectedCategory;
           const matchesStatus =
             selectedStatus === "all" ||
-            product.availabilityStatus.toLowerCase() === selectedStatus.toLowerCase();
+            product.availabilityStatus.toLowerCase() ===
+              selectedStatus.toLowerCase();
 
           return matchesCategory && matchesStatus;
         });
@@ -281,7 +283,9 @@ function ItemsPage() {
       const data = await response.json();
 
       const fileContent = JSON.stringify(data, null, 2);
-      const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
+      const blob = new Blob([fileContent], {
+        type: "text/plain;charset=utf-8",
+      });
       const url = URL.createObjectURL(blob);
 
       const link = document.createElement("a");
@@ -466,7 +470,10 @@ function ItemsPage() {
               </button>
 
               {submission.error && (
-                <p className="text-sm w-full text-center text-red-600" role="alert">
+                <p
+                  className="text-sm w-full text-center text-red-600"
+                  role="alert"
+                >
                   {submission.error}
                 </p>
               )}
@@ -637,7 +644,9 @@ function ItemsPage() {
                               allProductsSelected
                                 ? selected.filter(
                                     (id) =>
-                                      !products.some((product) => product.id === id),
+                                      !products.some(
+                                        (product) => product.id === id,
+                                      ),
                                   )
                                 : Array.from(
                                     new Set([
@@ -650,7 +659,9 @@ function ItemsPage() {
                           checked={allProductsSelected}
                           className="shrink-0 aspect-square"
                         />
-                        <span>{allProductsSelected ? "Deselect All" : "Select All"}</span>
+                        <span>
+                          {allProductsSelected ? "Deselect All" : "Select All"}
+                        </span>
                       </div>
 
                       {selected.length > 0 && (
@@ -679,7 +690,10 @@ function ItemsPage() {
               {loading ? (
                 Array.from({ length: 4 }).map((_, index) => (
                   <tr key={`loading-${index}`} className="h-20 animate-pulse">
-                    <td colSpan={7} className="border-t border-[#edf1ef] px-5 py-5">
+                    <td
+                      colSpan={7}
+                      className="border-t border-[#edf1ef] px-5 py-5"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="h-5 w-5 rounded bg-[#e8eeeb]" />
                         <div className="h-12 w-30 rounded bg-[#e8eeeb]" />
@@ -703,8 +717,14 @@ function ItemsPage() {
                     colSpan={7}
                     className="h-55 border-t border-[#edf1ef] px-5 py-10 text-center"
                   >
-                    <HourglassEmpty className="mb-4" fontSize="large" color="error" />
-                    <p className="text-sm font-medium text-[#354440]">No items found</p>
+                    <HourglassEmpty
+                      className="mb-4"
+                      fontSize="large"
+                      color="error"
+                    />
+                    <p className="text-sm font-medium text-[#354440]">
+                      No items found
+                    </p>
                     <p className="mt-1 text-xs text-[#87938f]">
                       Try changing your search or filters.
                     </p>
