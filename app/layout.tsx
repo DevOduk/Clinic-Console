@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { UserProvider } from "./context/userContext";
 
@@ -15,17 +16,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <UserProvider>
-      <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} ${outfit.className} h-full antialiased`}
-      >
-        <body suppressHydrationWarning className="min-h-full flex flex-col">
-          {children}
-        </body>
-      </html>
-    </UserProvider>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${outfit.className} h-full antialiased`}
+    >
+      <body suppressHydrationWarning className="min-h-full flex flex-col">
+        <Suspense fallback={null}>
+          <UserProvider>{children}</UserProvider>
+        </Suspense>
+      </body>
+    </html>
   );
 }

@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import Button from "@mui/material/Button";
 
-export default function ErrorPage({
+export default function GlobalErrorPage({
   error,
   reset,
 }: {
@@ -11,7 +10,7 @@ export default function ErrorPage({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Application error boundary caught:", error);
+    console.error("Global error boundary caught:", error);
   }, [error]);
 
   return (
@@ -19,21 +18,21 @@ export default function ErrorPage({
       <div className="max-w-md space-y-4 rounded-xl border border-red-200 bg-red-50 p-6 shadow-sm">
         <h2 className="text-lg font-bold text-red-800">Something went wrong!</h2>
         <p className="text-sm text-red-600">
-          {error.message || "An unexpected error occurred while loading this screen."}
+          {error.message || "An unexpected server or network error occurred."}
         </p>
         <div className="flex justify-center gap-4 pt-2">
-          <Button
-            variant="contained"
-            color="error"
-            onClick={
-              reset
-            }
+          <button
+            onClick={() => reset()}
+            className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
           >
             Try Again
-          </Button>
-          <Button variant="outlined" onClick={() => (window.location.href = "/")}>
+          </button>
+          <a
+            href="/"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
             Go Home
-          </Button>
+          </a>
         </div>
       </div>
     </div>
