@@ -29,16 +29,17 @@ export default function PagesLayout({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!checksEnabled) return;
+    if (!checksEnabled || isOnline) return;
 
-    if (isOnline) {
-      setShowOfflineStatus(false);
-      return;
-    }
+    const timer = setTimeout(() => {
+      setShowOfflineStatus(true);
+    }, 3000);
 
-    const timer = setTimeout(() => setShowOfflineStatus(true), 3000);
     return () => clearTimeout(timer);
   }, [checksEnabled, isOnline]);
+
+  const shouldShowOfflineStatus =
+    checksEnabled && !isOnline && showOfflineStatus;
 
   useEffect(() => {
     if (loading || profile) return;
@@ -74,7 +75,7 @@ export default function PagesLayout({ children }: { children: ReactNode }) {
       <main className="relative flex h-screen overflow-y-auto min-w-0 flex-1 flex-col">
         <Header onMenuClick={() => setIsSidebarOpen(true)} />
 
-        {showOfflineStatus ? <OfflineBanner /> : children}
+        {shouldShowOfflineStatus ? <OfflineBanner /> : children}
       </main>
     </div>
   );

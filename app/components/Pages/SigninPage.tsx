@@ -158,7 +158,7 @@ function SigninPage() {
           {isSubmitting ? "Signing in ..." : "Sign in"}
         </button>
         <div>
-          Don't have an account yet? <Link href={"#"}>Sign up.</Link>
+          Don&apos;t have an account yet? <Link href={"#"}>Sign up.</Link>
         </div>
       </form>
     </div>

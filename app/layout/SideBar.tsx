@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Avatar, IconButton } from "@mui/material";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
-import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import { usePathname } from "next/navigation";
@@ -139,27 +138,36 @@ export default function SideBar({
             )}
           </div>
         </div>
-
-        <div className="flex gap-2 items-center w-full">
-          <Avatar
-            className="text-black!"
-            src={profile.image}
-            sx={{ bgcolor: "var(--orange)" }}
-          >
-            AM
-          </Avatar>
-          <div className="w-full">
-            <div className="text-sm">
-              {profile.firstName} {profile.lastName}{" "}
+        {profile ? (
+          <div className="flex gap-2 items-center w-full">
+            <Avatar
+              className="text-black!"
+              src={profile.image}
+              sx={{ bgcolor: "var(--orange)" }}
+            >
+              AM
+            </Avatar>
+            <div className="w-full">
+              <div className="text-sm">
+                {profile.firstName} {profile.lastName}{" "}
+              </div>
+              <span className="muted text-xs text-gray-400 uppercase">
+                {profile.role}
+              </span>
             </div>
-            <span className="muted text-xs text-gray-400 uppercase">
-              {profile.role}
-            </span>
+            <IconButton onClick={() => handleLogout()} className="text-red-500">
+              <LogoutOutlined className="text-red-500" />
+            </IconButton>
           </div>
-          <IconButton onClick={() => handleLogout()} className="text-red-500">
-            <LogoutOutlined className="text-red-500" />
-          </IconButton>
-        </div>
+        ) : (
+          <div className="flex mt-auto w-full items-center gap-3 border-b border-gray-400 py-3 animate-pulse">
+            <div className="h-10 aspect-square bg-gray-400 rounded-full shrink-0" />
+            <div className="w-full flex flex-col gap-1">
+              <div className="w-[45%] rounded h-3 bg-gray-300" />
+              <div className="w-[15%] h-2 rounded bg-gray-300" />
+            </div>
+          </div>
+        )}
       </div>
     </aside>
   );

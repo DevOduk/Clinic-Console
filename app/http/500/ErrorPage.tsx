@@ -1,18 +1,17 @@
 "use client";
 
 import { DataErrorState } from "@/app/components/DataErrorState";
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Http500TestPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchHttp500 = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
+    setLoading(true);
+    setError(null);
 
-      // getting an error response
+    try {
       const res = await fetch("https://dummyjson.com/http/500");
 
       if (!res.ok) {
@@ -20,16 +19,50 @@ export default function Http500TestPage() {
           `HTTP Error ${res.status}: Server returned an internal server error response.`,
         );
       }
-    } catch (err: any) {
-      setError(err.message || "Failed to complete the test request.");
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to complete the test request.",
+      );
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchHttp500();
-  }, [fetchHttp500]);
+    let cancelled = false;
+
+    const run = async () => {
+      try {
+        const res = await fetch("https://dummyjson.com/http/500");
+
+        if (!res.ok) {
+          throw new Error(
+            `HTTP Error ${res.status}: Server returned an internal server error response.`,
+          );
+        }
+      } catch (err: unknown) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Failed to complete the test request.",
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (loading) {
     return (

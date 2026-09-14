@@ -3,8 +3,9 @@
 import { Product } from "@/app/data/products";
 import { Star } from "@mui/icons-material";
 import { Checkbox } from "@mui/material";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function ProductTableRow({
   item,
@@ -16,12 +17,6 @@ function ProductTableRow({
   setSelected: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   const isSelected = selected.includes(item.id);
 
   return (
@@ -31,7 +26,7 @@ function ProductTableRow({
       }`}
       onClick={() => router.push(`/items/${item.id}`)}
     >
-      <td className="relative flex items-center gap-3 px-5 py-3.5 text-sm text-[#65736f] border-t border-[#edf1ef]">
+      <td className="relative flex items-center gap-3 border-t border-[#edf1ef] px-5 py-3.5 text-sm text-[#65736f]">
         <Checkbox
           checked={isSelected}
           onChange={(e) => {
@@ -45,11 +40,16 @@ function ProductTableRow({
           onClick={(e) => e.stopPropagation()}
           className="shrink-0 aspect-square"
         />
-        <img
-          className="aspect-video w-16 md:w-30 shrink-0 rounded object-cover object-center"
-          src={item.thumbnail}
-          alt={item.title}
-        />
+        <div className="relative h-10 w-16 shrink-0 overflow-hidden rounded md:h-14 md:w-24">
+          <Image
+            src={item.thumbnail}
+            alt={item.title}
+            width={96}
+            height={54}
+            sizes="(max-width: 768px) 64px, 96px"
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
       </td>
       <td className="border-t text-nowrap border-[#edf1ef] px-5 py-3.5 text-xs text-[#65736f]">
         <strong className="block text-sm font-medium text-[#354440]">
@@ -84,7 +84,7 @@ function ProductTableRow({
         </span>
       </td>
       <td className="whitespace-nowrap border-t border-[#edf1ef] px-5 py-3.5 text-xs text-[#65736f]">
-        {isMounted ? new Date(item.meta.updatedAt).toLocaleString() : ""}
+        {new Date(item.meta.updatedAt).toLocaleString()}
       </td>
     </tr>
   );

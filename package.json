@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "npx next lint",
+    "lint": "eslint .",
     "format:check": "npx prettier --check .",
     "prepare": "husky",
     "test": "echo \"No tests specified\" && exit 0"

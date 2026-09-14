@@ -24,7 +24,6 @@ function CategoryPageView({ category }: { category: string }) {
   const currentPage = Number(searchParams.get("page")) || 1;
   const selectedOrder = searchParams.get("order") || "";
 
-  const [searchTerm, setSearchTerm] = useState(searchQuery);
   const [totalResults, setTotalResults] = useState(0);
   const [selected, setSelected] = useState<number[]>([]);
   const [start, setStart] = useState<number>(0);
@@ -35,30 +34,6 @@ function CategoryPageView({ category }: { category: string }) {
     products.length > 0 &&
     products.every((product) => selected.includes(product.id));
   const [backDrop, setBackDrop] = useState(false);
-
-  useEffect(() => {
-    setSearchTerm(searchQuery);
-  }, [searchQuery]);
-
-  // Debounce search query updates to URL
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchTerm !== searchQuery) {
-        const params = new URLSearchParams(searchParams.toString());
-        if (searchTerm) {
-          params.set("q", searchTerm);
-        } else {
-          params.delete("q");
-        }
-        params.delete("page"); // Reset to page 1 on search change
-        startTransition(() => {
-          router.push(`?${params.toString()}`);
-        });
-      }
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm, searchQuery, searchParams, router]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -203,7 +178,7 @@ function CategoryPageView({ category }: { category: string }) {
 
       setBackDrop(false);
       alert("Products deleted successfully!");
-    } catch (error) {
+    } catch {
       alert("Something went wrong while deleting.");
 
       setBackDrop(false);

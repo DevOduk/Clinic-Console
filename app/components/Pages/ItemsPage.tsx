@@ -2,9 +2,9 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "../Pagination";
-import { Checkbox, IconButton } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { useEffect, useState, useTransition } from "react";
-import { HourglassEmpty, Star, StarBorderOutlined } from "@mui/icons-material";
+import { HourglassEmpty } from "@mui/icons-material";
 import { Category, Product, ProductsResponse } from "@/app/data/products";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -72,7 +72,6 @@ function ItemsPage() {
   const selectedOrder = searchParams.get("order") || "";
   const newItem = searchParams.get("new") == "1" ? true : false;
 
-  const [searchTerm, setSearchTerm] = useState(searchQuery);
   const [totalResults, setTotalResults] = useState(0);
   const [selected, setSelected] = useState<number[]>([]);
   const [start, setStart] = useState<number>(0);
@@ -93,30 +92,6 @@ function ItemsPage() {
     data: Product | null;
     error: string | null;
   }>({ success: null, data: null, error: null });
-
-  useEffect(() => {
-    setSearchTerm(searchQuery);
-  }, [searchQuery]);
-
-  // Debounce search query updates to URL
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchTerm !== searchQuery) {
-        const params = new URLSearchParams(searchParams.toString());
-        if (searchTerm) {
-          params.set("q", searchTerm);
-        } else {
-          params.delete("q");
-        }
-        params.delete("page"); // Reset to page 1 on search change
-        startTransition(() => {
-          router.push(`?${params.toString()}`);
-        });
-      }
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm, searchQuery, searchParams, router]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -265,11 +240,14 @@ function ItemsPage() {
       params.delete("new");
 
       router.push(`?${params.toString()}`);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Caught error:", err);
       setSubmission((prev) => ({
         ...prev,
-        error: err?.message || "Critical error when submitting product!",
+        error:
+          err instanceof Error
+            ? err?.message
+            : "Critical error when submitting product!",
       }));
     } finally {
       setIsSubmitting(false);
@@ -321,7 +299,7 @@ function ItemsPage() {
       alert("Products deleted successfully!");
 
       setBackDrop(false);
-    } catch (error) {
+    } catch {
       alert("Something went wrong while deleting.");
 
       setBackDrop(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { useNetworkStatus } from "../hooks/useNetworkStatus";
 import WifiOffOutlinedIcon from "@mui/icons-material/WifiOffOutlined";
 import WifiOutlinedIcon from "@mui/icons-material/WifiOutlined";
@@ -11,8 +11,14 @@ export default function OfflineBanner() {
 
   useEffect(() => {
     if (isOnline) {
-      setShowRestored(true);
-      const timer = setTimeout(() => setShowRestored(false), 3000);
+      startTransition(() => {
+        setShowRestored(true);
+      });
+      const timer = setTimeout(() => {
+        startTransition(() => {
+          setShowRestored(false);
+        });
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [isOnline]);

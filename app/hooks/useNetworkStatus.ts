@@ -1,48 +1,63 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 export function useNetworkStatus(pingUrl = "/api/ping") {
-  const [isOnline, setIsOnline] = useState<boolean>(
+  const [isOnline, setIsOnline] = useState(
     typeof window !== "undefined" ? navigator.onLine : true,
   );
-  // default to isOnline on initial load
-
-  const verifyActualConnection = useCallback(async () => {
-    if (!navigator.onLine) {
-      setIsOnline(false);
-      return;
-    }
-
-    try {
-      await fetch(`${pingUrl}?t=${Date.now()}`, {
-        method: "HEAD",
-        cache: "no-store",
-      });
-      setIsOnline(true);
-    } catch (error) {
-      setIsOnline(false);
-    }
-  }, [pingUrl]);
 
   useEffect(() => {
-    // Initial verification on mount
-    verifyActualConnection();
+    let cancelled = false;
 
-    const handleOnline = () => verifyActualConnection();
-    const handleOffline = () => setIsOnline(false);
+    const verifyConnection = async () => {
+      if (!navigator.onLine) {
+        if (!cancelled) {
+          setIsOnline(false);
+        }
+        return;
+      }
+
+      try {
+        await fetch(`${pingUrl}?t=${Date.now()}`, {
+          method: "HEAD",
+          cache: "no-store",
+        });
+
+        if (!cancelled) {
+          setIsOnline(true);
+        }
+      } catch {
+        if (!cancelled) {
+          setIsOnline(false);
+        }
+      }
+    };
+
+    const handleOnline = () => {
+      void verifyConnection();
+    };
+
+    const handleOffline = () => {
+      setIsOnline(false);
+    };
 
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
 
-    const interval = setInterval(verifyActualConnection, 30000);
+    const interval = setInterval(() => {
+      void verifyConnection();
+    }, 30000);
+
+    void verifyConnection();
 
     return () => {
+      cancelled = true;
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
       clearInterval(interval);
     };
-  }, [verifyActualConnection]);
+  }, [pingUrl]);
 
   return isOnline;
 }

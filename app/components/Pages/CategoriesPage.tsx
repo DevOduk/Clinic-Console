@@ -128,8 +128,8 @@ function CategoriesView() {
                   </tr>
                 ))
               ) : paginatedCategories.length > 0 ? (
-                paginatedCategories.map((category) => {
-                  const tone = tones[Math.floor(Math.random() * tones.length)];
+                paginatedCategories.map((category, i) => {
+                  const tone = tones[i % tones.length];
 
                   return (
                     <tr

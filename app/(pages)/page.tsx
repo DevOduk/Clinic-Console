@@ -10,6 +10,7 @@ import Greeting from "../components/ui/Greeting";
 import { Metadata } from "next";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Home | Clinic - Inventory Management Solution",
@@ -22,7 +23,7 @@ interface Metric {
   value: string;
   detail: string;
   tone: string;
-  icon?: any;
+  icon?: React.ReactNode;
 }
 export default async function Home() {
   const requestHeaders = await headers();

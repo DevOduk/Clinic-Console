@@ -6,6 +6,7 @@ import { Product } from "@/app/data/products";
 import { handleDeleteProducts } from "@/app/utils/DeleteProducts";
 import { useRouter } from "next/navigation";
 import { Backdrop, CircularProgress } from "@mui/material";
+import Image from "next/image";
 
 function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
   const router = useRouter();
@@ -60,11 +61,14 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
         ...prev,
         success: "Product has been updated successfully!",
       }));
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Caught error:", err);
       setSubmission((prev) => ({
         ...prev,
-        error: err?.message || "Critical error when submitting product!",
+        error:
+          err instanceof Error
+            ? err?.message
+            : "Critical error when submitting product!",
       }));
     } finally {
       setIsSubmitting(false);
@@ -82,7 +86,7 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
       alert("Product deleted successfully!");
 
       setBackDrop(false);
-    } catch (error) {
+    } catch {
       alert("Something went wrong while deleting.");
 
       setBackDrop(false);
@@ -111,7 +115,7 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
       )}
       <div className="grid items-start gap-10 md:grid-cols-2">
         <div className="relative">
-          <div className="relative w-full aspect-4/3 overflow-hidden bg-gray-200">
+          <div className="relative w-full h-100 overflow-hidden bg-gray-200 rounded-lg">
             <div className="absolute inset-0 flex items-center justify-center bg-zinc-200/40 text-xs font-medium text-gray-400">
               <span>{ProductDetails.title}</span>
             </div>
@@ -123,25 +127,33 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
                 {`${ProductDetails.discountPercentage}% Off`}
               </span>
             </span>
-            <img
-              src={ProductDetails.images[currentImage]}
-              alt={ProductDetails.title}
-              className="absolute rounded-lg inset-0 h-full w-full bg-gray-200 object-cover transition-transform duration-300 group-hover:scale-105 brightness-90"
-              sizes="(max-width: 1024px) 50vw, 33vw"
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-          <div className="flex justify-center snap-proximity overflow-x-auto items-center gap-2 p-2 mt-3">
-            {ProductDetails.images.map((img, i) => (
-              <img
-                key={i}
-                onClick={() => setCurrentImage(i)}
-                src={img || "/images/pizza.avif"}
+            <div className="absolute inset-0">
+              <Image
+                fill
+                src={ProductDetails.images[currentImage]}
                 alt={ProductDetails.title}
-                title={ProductDetails.title}
-                className={`border-2 scroll-smooth snap-x ${currentImage === i ? "border-green-500  brightness-100" : "border-transparent  brightness-60"} aspect-square w-20 cursor-pointer object-center rounded-lg bg-gray-200 object-cover transition-transform duration-300 group-hover:scale-105`}
+                className="rounded-lg p-2 object-cover transition-transform duration-300 group-hover:scale-105 brightness-90"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
               />
-            ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center snap-proximity overflow-x-auto items-center gap-2 p-2 mt-3">
+            <div className="flex justify-center snap-proximity overflow-x-auto items-center gap-2 p-2 mt-3">
+              {ProductDetails.images.map((img, i) => (
+                <Image
+                  key={i}
+                  width={80}
+                  height={80}
+                  onClick={() => setCurrentImage(i)}
+                  src={img || "/images/pizza.avif"}
+                  alt={ProductDetails.title}
+                  title={ProductDetails.title}
+                  className={`border-2 scroll-smooth snap-x ${currentImage === i ? "border-green-500  brightness-100" : "border-transparent  brightness-60"} aspect-square w-20 cursor-pointer object-center rounded-lg bg-gray-200 object-cover transition-transform duration-300 group-hover:scale-105`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 

@@ -13,12 +13,13 @@ import React, {
 } from "react";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { Profile } from "../data/profile";
 
 interface UserContextType {
-  profile: any | null;
+  profile: Profile | null;
   loading: boolean;
   logout: () => void;
-  setProfile: React.Dispatch<React.SetStateAction<any | null>>;
+  setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -34,7 +35,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [profile, setProfile] = useState<any | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(defaultToast);
 
