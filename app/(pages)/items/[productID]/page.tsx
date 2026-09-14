@@ -5,7 +5,6 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { Metadata } from "next";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
-import ReplayIcon from "@mui/icons-material/Replay";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import RetryButton from "@/app/components/ui/RetryButton";
 

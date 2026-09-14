@@ -5,6 +5,8 @@ import type { ProductsResponse } from "@/app/data/products";
 import { formatedValue } from "../data/formating";
 import Greeting from "../components/ui/Greeting";
 import { Metadata } from "next";
+import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 
 export const metadata: Metadata = {
   title: "Home | Clinic - Inventory Management Solution",
@@ -12,6 +14,13 @@ export const metadata: Metadata = {
     "Manage your clinic stock inventory with ease. Update prices and stock count with one click!",
 };
 
+interface Metric {
+  label: string;
+  value: string;
+  detail: string;
+  tone: string;
+  icon?: any;
+}
 export default async function Home() {
   const requestHeaders = await headers();
   const host = requestHeaders.get("host");
@@ -35,20 +44,23 @@ export default async function Home() {
       0,
     ) || 0;
 
+    // take first 15 sorted by last updated 
   const recentProducts = products?.products
     ?.sort(
       (a, b) =>
         new Date(b.meta.updatedAt).getTime() - new Date(a.meta.updatedAt).getTime(),
     )
-    .slice(0, 10);
+    .slice(0, 15);
 
   const outOfStock = products.products?.filter(
     (product) => product.availabilityStatus.toLowerCase() === "out of stock",
   );
+
   const lowStock = products.products.filter(
     (product) => product.availabilityStatus.toLowerCase() === "low stock",
   );
-  const metrics = [
+
+  const metrics: Metric[] = [
     {
       label: "Total items",
       value: `${products.total}`,
@@ -60,12 +72,14 @@ export default async function Home() {
       value: `${outOfStock.length}`,
       detail: "Out of stock items (Critical)",
       tone: "red",
+      icon: <ReportGmailerrorredIcon color="error" />,
     },
     {
       label: "Low stock",
       value: `${lowStock.length}`,
       detail: "Low stock items (Needs attention)",
       tone: "orange",
+      icon: <HelpOutlineOutlinedIcon color="action" />,
     },
     {
       label: "Inventory value",
@@ -95,7 +109,7 @@ export default async function Home() {
           </p>
         </div>
         <Link
-          className="inline-flex cursor-pointer shrink-0 min-h-10 flex-nowrap items-center w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-xs text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
+          className="inline-flex cursor-pointer shrink-0 min-h-10 flex-nowrap items-center w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
           href="/items?new=1"
         >
           <span>+</span> Add inventory item
@@ -108,20 +122,20 @@ export default async function Home() {
       >
         {metrics.map((metric) => (
           <article
-            className="relative min-h-38.5 overflow-hidden rounded-lg border border-(--line) bg-white p-5"
+            className="relative shadow-lg overflow-hidden rounded-2xl border border-(--line) bg-white p-5"
             key={metric.label}
           >
             <div
-              className={`absolute -right-3.75 -top-5.75 h-18 w-18 rounded-full opacity-[0.11] ${metric.tone === "blue" ? "bg-(--blue)" : metric.tone === "orange" ? "bg-(--orange)" : "bg-(--green)"}`}
+              className={`absolute -right-10 -top-15 h-34 aspect-square rounded-full opacity-[0.1] ${metric.tone === "red" ? "bg-(--red)" : metric.tone === "blue" ? "bg-(--blue)" : metric.tone === "orange" ? "bg-(--orange)" : "bg-(--green)"}`}
             />
             <h2 className="mb-3 font-semibold tracking-wide text-lg text-(--muted)">
               {metric.label}
             </h2>
-            <p className="block text-3xl tracking-[-0.03em] text-[#263633]">
-              {metric.value}
+            <p className="flex gap-1 items-center text-3xl tracking-[-0.03em] text-[#263633]">
+              {metric.value} {metric.icon && metric.icon}
             </p>
             <span
-              className={`mt-2 block text-xs ${metric.tone === "red" ? "text-red-400" : metric.tone === "blue" ? "text-(--blue)" : metric.tone === "orange" ? "text-(--orange)" : "text-(--green)"}`}
+              className={`mt-2 block text-sm ${metric.tone === "red" ? "text-red-400" : metric.tone === "blue" ? "text-(--blue)" : metric.tone === "orange" ? "text-(--orange)" : "text-(--green)"}`}
             >
               {metric.detail}
             </span>
@@ -130,14 +144,14 @@ export default async function Home() {
       </section>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(300px,0.85fr)] items-start">
-        <section className="rounded-lg border border-(--line) bg-white p-6">
+        <section className="rounded-2xl border border-(--line) bg-white p-6">
           <div className="flex items-start justify-between">
             <div>
               <p className="mb-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#7a8a86]">
                 Recent activity
               </p>
               <h2 className="font-serif text-xl font-normal tracking-[-0.02em] text-[#263633]">
-                Inventory activity
+                Latest inventory activity
               </h2>
             </div>
           </div>
@@ -177,7 +191,7 @@ export default async function Home() {
         </section>
 
         <div className="flex flex-col gap-3">
-          <section className="rounded-lg border border-(--line) bg-white p-6">
+          <section className="rounded-2xl border border-(--line) bg-white p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="mb-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#7a8a86]">
@@ -226,7 +240,7 @@ export default async function Home() {
               <ChevronRightOutlined />
             </Link>
           </section>
-          <section className="rounded-lg border border-(--line) bg-white p-6">
+          <section className="rounded-2xl border border-(--line) bg-white p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="mb-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#7a8a86]">
@@ -247,7 +261,7 @@ export default async function Home() {
                   key={alert.title}
                 >
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-100 font-extrabold border  text-orange-600">
-                    !
+                    ?
                   </div>
                   <div>
                     <strong className="block text-xs font-medium text-[#354440]">

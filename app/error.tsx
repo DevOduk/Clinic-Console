@@ -15,10 +15,10 @@ export default function GlobalErrorPage({
 
   return (
     <div className="flex h-[80vh] w-full flex-col items-center justify-center p-6 text-center">
-      <div className="max-w-md space-y-4 rounded-xl border border-red-200 bg-red-50 p-6 shadow-sm">
+      <div className="max-w-md space-y-4 p-6">
         <h2 className="text-lg font-bold text-red-800">Something went wrong!</h2>
         <p className="text-sm text-red-600">
-          {error.message || "An unexpected server or network error occurred."}
+          There was a system error: {error.message || "An unexpected server or network error occurred."}
         </p>
         <div className="flex justify-center gap-4 pt-2">
           <button

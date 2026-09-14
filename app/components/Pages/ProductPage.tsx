@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Product } from "@/app/data/products";
 import { handleDeleteProducts } from "@/app/utils/DeleteProducts";
 import { useRouter } from "next/navigation";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
   const router = useRouter();
@@ -12,6 +13,7 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
   const [count, setCount] = useState(Number(ProductDetails.stock));
   const [price, setPrice] = useState(Number(ProductDetails.price));
   const [currentImage, setCurrentImage] = useState(0);
+  const [backDrop, setBackDrop] = useState(false);
 
   // updating item
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,19 +69,32 @@ function ProductDetailsView({ ProductDetails }: { ProductDetails: Product }) {
 
   const handleDelete = async () => {
     if (!confirm(`Are you sure you want to delete this product?`)) return;
+    setBackDrop(true);
 
     try {
       await handleDeleteProducts([ProductDetails.id]);
 
       router.back();
       alert("Product deleted successfully!");
+
+      setBackDrop(false);
     } catch (error) {
       alert("Something went wrong while deleting.");
+
+      setBackDrop(false);
     }
   };
 
   return (
     <main className="px-4 py-16 w-full">
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={backDrop}
+        onClick={() => null}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       {submission.error && (
         <div className="p-2 px-3 mb-4 bg-red-100 border border-red-300 text-red-700 rounded-lg shadow font-semibold text-center">
           {submission.error}

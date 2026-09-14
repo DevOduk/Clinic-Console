@@ -54,7 +54,7 @@ function ProductTableRow({
       <td className="border-t text-nowrap border-[#edf1ef] px-5 py-3.5 text-xs text-[#65736f]">
         <strong className="block text-sm font-medium text-[#354440]">{item.title}</strong>
         <span className="mt-1 flex gap-1 items-center text-xs text-[#9aa8a4]">
-          <Star fontSize="small" /> {item.rating} | {item.sku}
+          <Star className="text-(--orange)" fontSize="small" /> {item.rating} | {item.sku}
         </span>
       </td>
       <td className="whitespace-nowrap uppercase border-t border-[#edf1ef] px-5 py-3.5 text-xs text-[#65736f]">

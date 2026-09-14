@@ -2,13 +2,14 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "../Pagination";
-import { Checkbox, IconButton } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { useEffect, useState, useTransition } from "react";
-import { HourglassEmpty, Star } from "@mui/icons-material";
+import { HourglassEmpty } from "@mui/icons-material";
 import { Product, ProductsResponse } from "@/app/data/products";
 import { LIMIT } from "./ItemsPage";
 import ProductTableRow from "../ui/ProductTableRow";
 import { handleDeleteProducts } from "@/app/utils/DeleteProducts";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 function CategoryPageView({ category }: { category: string }) {
   const router = useRouter();
@@ -32,6 +33,7 @@ function CategoryPageView({ category }: { category: string }) {
   const [exporting, setExporting] = useState<boolean>(false);
   const allProductsSelected =
     products.length > 0 && products.every((product) => selected.includes(product.id));
+  const [backDrop, setBackDrop] = useState(false);
 
   useEffect(() => {
     setSearchTerm(searchQuery);
@@ -185,14 +187,26 @@ function CategoryPageView({ category }: { category: string }) {
       await handleDeleteProducts(productIdsToDelete);
 
       setSelected([]);
+
+      setBackDrop(false);
       alert("Products deleted successfully!");
     } catch (error) {
       alert("Something went wrong while deleting.");
+
+      setBackDrop(false);
     }
   };
 
   return (
     <>
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={backDrop}
+        onClick={() => null}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <div className="mb-4.5 flex items-center md:items-end gap-3 flex-col md:flex-row">
         <label className="grid flex-1 gap-1.5 w-full md:w-auto">
           <span className="text-xs font-medium text-[#71817d]">Search</span>

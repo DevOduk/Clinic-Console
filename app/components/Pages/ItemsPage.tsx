@@ -6,13 +6,13 @@ import { Checkbox, IconButton } from "@mui/material";
 import { useEffect, useState, useTransition } from "react";
 import { HourglassEmpty, Star, StarBorderOutlined } from "@mui/icons-material";
 import { Category, Product, ProductsResponse } from "@/app/data/products";
-import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import SimpleBreadCrumb from "../SimpleBreadCrumb";
 import ProductTableRow from "../ui/ProductTableRow";
 import { handleDeleteProducts } from "@/app/utils/DeleteProducts";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -81,6 +81,7 @@ function ItemsPage() {
   const [exporting, setExporting] = useState<boolean>(false);
   const allProductsSelected =
     products.length > 0 && products.every((product) => selected.includes(product.id));
+  const [backDrop, setBackDrop] = useState(false);
 
   // creating new item
   const [open, setOpen] = useState(newItem);
@@ -298,7 +299,6 @@ function ItemsPage() {
     }
   };
 
-
   const handleDelete = async () => {
     if (
       !confirm(
@@ -306,21 +306,34 @@ function ItemsPage() {
       )
     )
       return;
+    setBackDrop(true);
 
     try {
-      const productIdsToDelete = selected; 
+      const productIdsToDelete = selected;
 
       await handleDeleteProducts(productIdsToDelete);
 
       setSelected([]);
       alert("Products deleted successfully!");
+
+      setBackDrop(false);
     } catch (error) {
       alert("Something went wrong while deleting.");
+
+      setBackDrop(false);
     }
   };
 
   return (
     <>
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={backDrop}
+        onClick={() => null}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

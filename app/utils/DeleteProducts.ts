@@ -1,7 +1,7 @@
 export const handleDeleteProducts = async (productIDs: number[]) => {
     try {
         const deletePromises = productIDs.map((id) =>
-            fetch(`https://dummyjson.com/products/${id}`, {
+            fetch(`https://dummyjson.com/products/${id}?delay=2000`, {
                 method: "DELETE",
             }).then((res) => {
                 if (!res.ok) {

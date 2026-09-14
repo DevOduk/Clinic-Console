@@ -12,4 +12,4 @@ function Greeting() {
   );
 }
 
-export default Greeting
+export default Greeting;
