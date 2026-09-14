@@ -109,7 +109,7 @@ export default async function Home() {
           </p>
         </div>
         <Link
-          className="inline-flex cursor-pointer shrink-0 min-h-10 flex-nowrap items-center w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
+          className="inline-flex cursor-pointer shrink-0 min-h-10 flex-nowrap items-center w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-white transition hover:-translate-y-px hover:bg-(--teal-dark) text-sm"
           href="/items?new=1"
         >
           <span>+</span> Add inventory item
@@ -128,14 +128,14 @@ export default async function Home() {
             <div
               className={`absolute -right-10 -top-15 h-34 aspect-square rounded-full opacity-[0.1] ${metric.tone === "red" ? "bg-(--red)" : metric.tone === "blue" ? "bg-(--blue)" : metric.tone === "orange" ? "bg-(--orange)" : "bg-(--green)"}`}
             />
-            <h2 className="mb-3 font-semibold tracking-wide text-lg text-(--muted)">
+            <h2 className="mb-3 font-semibold tracking-wide  text-sm text-(--muted)">
               {metric.label}
             </h2>
             <p className="flex gap-1 items-center text-3xl tracking-[-0.03em] text-[#263633]">
               {metric.value} {metric.icon && metric.icon}
             </p>
             <span
-              className={`mt-2 block text-sm ${metric.tone === "red" ? "text-red-400" : metric.tone === "blue" ? "text-(--blue)" : metric.tone === "orange" ? "text-(--orange)" : "text-(--green)"}`}
+              className={`mt-2 block text-xs ${metric.tone === "red" ? "text-red-400" : metric.tone === "blue" ? "text-(--blue)" : metric.tone === "orange" ? "text-(--orange)" : "text-(--green)"}`}
             >
               {metric.detail}
             </span>

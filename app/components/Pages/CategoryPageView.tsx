@@ -252,7 +252,7 @@ function CategoryPageView({ category }: { category: string }) {
             <button
               disabled={exporting}
               onClick={handleExport}
-              className="inline-flex cursor-pointer w-full md:w-auto bg-green-700 min-h-9.5 items-center justify-center gap-2 rounded-lg border text-xs border-(--line) px-4 text-white"
+              className="inline-flex cursor-pointer w-full md:w-auto bg-green-700 min-h-9.5 items-center justify-center gap-2 rounded-lg border text-sm! border-(--line) px-4 text-white"
               type="button"
             >
               {exporting ? "Exporting ..." : "Export list"}

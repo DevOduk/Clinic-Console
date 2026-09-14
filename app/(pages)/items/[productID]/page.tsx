@@ -110,7 +110,7 @@ async function ProductView({
         </div>
         <Link
           href={"/items?new=1"}
-          className="inline-flex shrink-0 min-h-10 flex-nowrap items-center w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
+          className="inline-flex shrink-0 min-h-10 flex-nowrap items-center text-sm w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
           type="button"
         >
           + Add new item

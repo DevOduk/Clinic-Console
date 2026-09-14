@@ -181,7 +181,9 @@ function CategoriesView() {
                     className="h-full border-t border-[#edf1ef] px-5 py-10 text-center"
                   >
                     <HourglassEmpty className="mb-4" fontSize="large" color="error" />
-                    <p className="text-sm font-medium text-[#354440]">No categories found</p>
+                    <p className="text-sm font-medium text-[#354440]">
+                      No categories found
+                    </p>
                     <p className="mt-1 text-xs text-[#87938f]">
                       Check your conncetion & try again.
                     </p>
@@ -216,7 +218,7 @@ function CategoriesView() {
         </p>
         <Link
           href={"/items"}
-          className="inline-flex gap-3 min-h-9.5 w-full items-center justify-center rounded-md border border-transparent bg-(--teal) px-4 text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
+          className="inline-flex gap-3 min-h-9.5 w-full items-center justify-center rounded-md border border-transparent bg-(--teal) px-4 text-white transition hover:-translate-y-px hover:bg-(--teal-dark) text-sm"
           type="button"
         >
           View inventory

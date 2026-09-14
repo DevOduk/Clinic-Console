@@ -487,7 +487,7 @@ function ItemsPage() {
         </div>
         <button
           onClick={() => setOpen(true)}
-          className="inline-flex cursor-pointer shrink-0 min-h-10 flex-nowrap items-center w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-xs text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
+          className="inline-flex cursor-pointer shrink-0 min-h-10 flex-nowrap items-center w-full mt-2 md:w-fit justify-center gap-2 rounded-md border border-transparent bg-(--teal) px-4 text-sm! text-white transition hover:-translate-y-px hover:bg-(--teal-dark)"
           type="button"
         >
           <span>+</span> Add new item
@@ -563,7 +563,7 @@ function ItemsPage() {
             <button
               disabled={exporting}
               onClick={handleExport}
-              className="inline-flex cursor-pointer w-full md:w-auto bg-green-700 min-h-9.5 items-center justify-center gap-2 rounded-lg border text-xs border-(--line) px-4 text-white"
+              className="inline-flex cursor-pointer w-full md:w-auto bg-green-700 min-h-9.5 items-center justify-center gap-2 rounded-lg border text-sm! border-(--line) px-4 text-white"
               type="button"
             >
               {exporting ? "Exporting ..." : "Export list"}{" "}
